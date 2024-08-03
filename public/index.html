@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The Trivia Game</title>
+    <script src="./js/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+</head>
+<body>
+    <h1 id="myName">Liam Carroll</h1>
+    <div id="menu" style="display: flex;">
+        <h1 id="title">The Trivia<br>Game!</h1>
+        
+
+        <div id="firstMenu" class="buttonHolder">
+            <div id="items">
+                <button onclick="joinLobbyMenu()" class="mmButton">Join Lobby</button>
+                <button onclick="createLobbyMenu()" class="mmButton">Create Lobby</button>
+            </div>
+        </div>
+
+        <div id="joinLobbyMenu" style="display: none;" class="buttonHolder">
+            <div id="items">
+                <input type="text" id="playerNamejoin" placeholder="Enter Name" class="mmInput" autocomplete="off">
+                <input type="text" id="joinLobbyId" placeholder="Lobby ID" class="mmInput" autocomplete="off">
+                <button onclick="joinLobby()" class="mmButton">Join</button>
+                <button onclick="backToMenu()" class="mmButton">Back</button>
+            </div>
+        </div>
+
+        <div id="createLobbyMenu" style="display: none;" class="buttonHolder">
+            <div id="items">
+                <input type="text" id="playerNameCreate" placeholder="Enter Name" class="mmInput" autocomplete="off">
+                <button onclick="createLobby()" class="mmButton">Create</button>
+                <button onclick="backToMenu()" class="mmButton">Back</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading" style="display: none;">
+        <h1>Loading...</h1>
+    </div>
+
+    <div id="game" style="display: none;">
+        <h1 id="lobID">Invite Code: <span id="lobbyIdSpan">abcdefghijkl123454</span></h1>
+
+        <div id="middleLine"></div>
+
+        <div class="playerArea">
+            <div class="player" style="display: none;" id="playGameP1">
+                <h1 class="pName" id="p1Game">Player 1</h1>
+                <h1 class="pScore" id="p1Score">0/0</h1>
+                
+                <div class="triviaBox" style="display: flex;" id="p1Box">
+                    <h1 class="category" id="category">category</h1>
+                    <h1 class="question" id="question">question</h1>
+
+                    <div class="Answer">
+                        <input type="radio" id="a1" name="answer" onclick="SetCurrentChoice(this)">
+                        <label for="a1" id="a1Text">A.</label>
+                    </div>
+                    <div class="Answer">
+                        <input type="radio" id="a2" name="answer" onclick="SetCurrentChoice(this)">
+                        <label for="a2" id="a2Text">B.</label>
+                    </div>
+                    <div class="Answer">
+                        <input type="radio" id="a3" name="answer" onclick="SetCurrentChoice(this)">
+                        <label for="a3" id="a3Text">C.</label>
+                    </div>
+                    <div class="Answer">
+                        <input type="radio" id="a4" name="answer" onclick="SetCurrentChoice(this)">
+                        <label for="a4" id="a4Text">D.</label>
+                    </div>
+
+                    <div class="sub">
+                        <h1 id="countDown">10</h1>
+                        <button onclick="submitAnswer()" class="gButton" id="submiter">Submit</button>
+                    </div>
+                </div>
+
+                <div class="result" id="p1Result" style="display: none; width: 100%;">
+                    <h1 class="normText" id="p1ResultText" style="max-height: 5%;">Correct!</h1>
+                    <h1 class="normText" id="p1ResultTextAnswer" style="max-height: 10%;">Blah Blah</h1>
+                    <button class="readyUp" style="display: flex; flex: .1; max-width: 50% !important;" id="p1RU2" onclick="ReadyUp()">Ready Up</button>
+                </div>
+            </div>
+
+            <div class="player" style="display: none;" id="playGameP2">
+                <h1 class="pName" id="p2Game">Player 2</h1>
+                <h1 class="pScore" id="p2Score">0/0</h1>
+                <div style="flex: 10; display: flex" id="empty"></div>
+                <div class="result" id="p2Result" style="display: none;">
+                    <h1 class="normText" id="p2ResultText">Correct!</h1>
+                </div>
+
+            </div>
+
+            <div class="player" style="display: flex;" id="readyUpP1">
+                <h1 class="pName" id="p1">Player 1</h1>
+                <div class="rUp">
+                    <div id="filters" style="display: none;">
+                        <div>
+                            <input type="checkbox" id="Europe" class="filter" checked>
+                            <label for="Europe">Europe</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="Asia" class="filter" checked>
+                            <label for="Asia">Asia</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="Africa" class="filter" checked>
+                            <label for="Africa">Africa</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="Oceania" class="filter" checked>
+                            <label for="Oceania">Oceania</label>
+                        </div>
+                        <div>
+                            <input type="checkbox" id="Americas" class="filter" checked>
+                            <label for="Americas">Americas</label>
+                        </div>
+                    </div>
+                    <button class="readyUp" style="display: none;" id="p1RU" onclick="ReadyUp()">Ready Up</button>
+                    <h1 class="normText" style="display: none;" id ="p1Waiting">Ready. Waiting...</h1>
+                </div>
+            </div>
+
+            <div class="player" style="display: flex;" id="readyUpP2">
+                <h1 class="pName" id="p2" style="height: 50% !important;">Player 2</h1>
+                
+                <h1 class="normText"  id="p2Waiting">Waiting for <span id="p2Name">Player 2</span> to ready up...</h1>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

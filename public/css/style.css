@@ -1,0 +1,332 @@
+@font-face {
+    font-family: 'Libel Suit Regular';
+    src: url('./libel-suit-rg.otf') format('opentype');
+}
+
+body{
+    background: linear-gradient(45deg, #987D9A, #433045);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    user-select: none;
+    color: #FEFBD8;
+    font-family: 'Libel Suit Regular';
+}
+
+#myName{
+    bottom: 0;
+    right: 0;
+    margin: .5%;
+
+    font-size: 1.5em;
+    position: absolute;
+}
+
+#menu{
+    /* background-color: #aa6f73; */
+    color: white;
+    width: 50%;
+    height: 50%;
+    align-items: center;
+    text-align: center;    
+    display: flex;
+    flex-direction: column;
+}
+
+#title{
+    /* shadow text */
+    text-shadow: 2px 2px 4px #000000;
+    font-size: 4em;
+    color: #f6e0b5;
+    height: 25%;
+    width: 100%;
+    flex: 1;
+}
+#items{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 5%;
+    height: 100%;
+    flex: 1;
+}
+#game{
+    width: 100%;
+    height: 100%;
+}
+.mmButton{
+    width: 30%;
+    /* height: 35%; */
+    flex: 1;
+    border-radius: 5% / 15%;
+    border: solid .25vw #000000;
+    cursor: pointer;
+    background-color: #66545e;
+    color: white;
+    font-size: 2em;
+
+    word-spacing: .5em;
+    transition: .5s;
+}
+
+.mmButton:hover{
+    background-color: #4a3f45;
+    transform: scale(1.05) rotate(1deg);
+    transition: .5s;
+}
+
+.mmInput{
+    width: 60%;
+    flex: 1;    
+    cursor: pointer;
+    background-color: #e0e0e0;
+    color: rgb(0, 0, 0);
+    font-size: 1.5em;
+
+    border: solid .15vw #000000;
+    height: 35%;
+}
+.sub{
+    width: 30%;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    gap: 15%;
+}
+.gButton{
+    max-height: 50%;
+    aspect-ratio: 2/1;
+    border-radius: 5% / 15%;
+    border: solid .15vw #000;
+    background-color: #EECEB9;
+    color: #000;
+    font-family: 'Libel Suit Regular';
+    font-size: 1em;
+    flex: 10;
+}
+
+#countDown{
+    flex: 1;
+    font-size: 2em;
+    margin: 0;
+}
+
+.buttonHolder{
+    height: 100%;
+    width: 100%;
+}
+
+#lobID{
+    color:aquamarine;
+    font-size: 1.5em;
+    top: 0;
+    left: 0;
+    margin-left: 2.5%;
+    position: absolute;
+}
+#lobbyIdSpan{
+    color: #000000;
+    font-size: .75em;
+    user-select: all;
+}
+
+.readyUp{
+    width: 30%;
+    height: auto;
+    aspect-ratio: 3/1;
+    font-size: 2em;
+
+    border-radius: 5% / 15%;
+    transition: .5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.readyUp:hover{
+    background-color: #c8c7c8;
+    transform: scale(1.01);
+    transition: .5s;
+}
+.rUp{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 10;
+}
+#filters{
+    height: min-content;
+    width: 80%;
+    font-size: 2em;
+    flex-direction: row;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+    flex-wrap: wrap;
+    flex: 5;
+}
+#rr{
+    height: 50%;
+    width: 40%;
+    
+}
+.normText{
+    font-size: 2em;
+
+    color: #000000;
+    margin: 0;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.pName{
+    color: #FFD700;
+    font-size: 2.5em;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    margin-top: 10%;
+    flex: 1;    
+
+}
+.pScore{
+    color: #FFD700;
+    font-size: 2em;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin: 0%;
+    height: 3%;
+    margin-bottom:5%;
+    flex: 1;
+}
+#middleLine{
+    width: .5%;
+    height: 100%;
+    background-color: #EECEB9;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.playerArea{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 0%;
+    height: 100%;
+    width: 100%;
+    flex: 1;
+
+}
+
+.player{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: top;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.wfit{
+    height: 20%;
+    font-size: 1.5em;
+    flex:1;
+    margin: 0;
+}
+
+.flag{
+    width: 100%;
+    height: auto;
+}
+
+.flagHolder{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.flagArea{
+    width: 100%;
+    max-width: 100%;
+    height: 40%;
+    font-size: 1.5em;
+    text-align: center;
+    margin: 0;
+    flex: 1;
+    flex-wrap: wrap;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.finalGuess{
+    font-size: 2em;
+
+    flex:1;
+    margin: 0;
+    height: 1%;
+}
+
+.triviaBox{
+    display: flex;
+    flex: 10;
+    gap: 1%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 1.5em;
+}
+
+.question{
+    font-size: 2em;
+
+    flex: 100%;
+    margin: 1%;
+    text-align: center;
+    flex: 3;
+}   
+
+.category{
+    font-size: 1.5em;
+    flex: 1;
+    margin: 0;
+}
+
+.result
+{
+    flex: 10;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
