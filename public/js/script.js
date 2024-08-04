@@ -31,6 +31,26 @@ async function joinLobby() {
     document.getElementById("p2Waiting").innerHTML = "Waiting for " + players.names[0] + " to ready up...";
     document.getElementById("p1RU").style.display = "block";
     document.getElementById("lobbyIdSpan").innerHTML = "";
+
+    //wait for country order
+    while(true) {
+        await new Promise(r => setTimeout(r, 1000));
+        const response2 = await fetch('/getQuestions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({lobbyCode: lobbyCode})
+        });
+
+        let data2 = await response2.json();
+
+        if(data2.code == 1) {
+            questions = data2.questions;
+            break;
+        }
+    }
+
     while(!players.ready[0] || !players.ready[1]) {
         await new Promise(r => setTimeout(r, 1000));
 
@@ -57,25 +77,6 @@ async function joinLobby() {
     document.getElementById("playGameP1").style.display = "flex";
     document.getElementById("playGameP2").style.display = "flex";
     
-
-    //wait for country order
-    while(true) {
-        await new Promise(r => setTimeout(r, 1000));
-        const response2 = await fetch('/getQuestions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({lobbyCode: lobbyCode})
-        });
-
-        let data2 = await response2.json();
-
-        if(data2.code == 1) {
-            questions = data2.questions;
-            break;
-        }
-    }
     players.ready[0] = false;
     players.ready[1] = false;
     GameLoop()
@@ -189,6 +190,9 @@ async function GameLoop() {
         if(host){
             ClearPlayerAnswers();
             ClearFinishRound();
+        }else{
+            players.answers[0] = "";
+            players.answers[1] = "";
         }
         await Countdown(15);
 
@@ -197,6 +201,7 @@ async function GameLoop() {
         await BothPlayersFinishRound();
 
         await GetPlayerAnswers();
+        await new Promise(r => setTimeout(r, 1000));
         UpdateAnswerDisplay();
 
         if(host) {
@@ -205,7 +210,7 @@ async function GameLoop() {
             players.ready[0] = false;
             players.ready[1] = false;
         }
-        await new Promise(r => setTimeout(r, 3000));
+        await new Promise(r => setTimeout(r, 2000));
 
         round++;
         UpdateScoreDisplay();
@@ -218,9 +223,6 @@ async function GameLoop() {
         document.getElementById("empty").style.display = "flex";
         document.getElementById("p1Box").style.display = "flex";
         document.getElementById("p1Result").style.display = "none";
-
-        players.answers[0] = "";
-        players.answers[1] = "";
 
         await new Promise(r => setTimeout(r, 1000));
     }
@@ -241,7 +243,6 @@ function SetInfo(){
     document.getElementById("a4Text").innerHTML = answers[3];
 
     let radios = document.getElementsByName("answer");
-    console.log(radios);
     for(let i = 0; i < radios.length; i++){
         radios[i].checked = false;
         radios[i].disabled = false;
@@ -284,6 +285,9 @@ async function GetPlayerAnswers() {
         await new Promise(r => setTimeout(r, 100));
         GetPlayerAnswers();
     }else{
+        console.log("player 1 had" + data.answers[0]);
+        console.log("player 2 had" + data.answers[1]);
+
         players.answers[0] = data.answers[0];
         players.answers[1] = data.answers[1];
     }
@@ -303,7 +307,7 @@ function UpdateAnswerDisplay() {
         document.getElementById("p1ResultText").innerHTML = players.answers[host?0:1].toLowerCase() == questions[round].correct_answer.toLowerCase() ? "Correct!" : "Incorrect!";
         document.getElementById("p1ResultText").style.color = document.getElementById("p1ResultText").innerHTML == "Correct!" ? "green" : "red";
         players.scores[host?0:1] += document.getElementById("p1ResultText").innerHTML == "Correct!" ? 1 : 0;
-        if(host) AddPointToPlayer(host?0:1);
+        if(host) AddPointToPlayer(0);
     }
 
     document.getElementById("p2Result").style.display = "flex";
@@ -316,7 +320,7 @@ function UpdateAnswerDisplay() {
         document.getElementById("p2ResultText").innerHTML = players.answers[host?1:0].toLowerCase() == questions[round].correct_answer.toLowerCase() ? "Correct!" : "Incorrect!";
         document.getElementById("p2ResultText").style.color = document.getElementById("p2ResultText").innerHTML == "Correct!" ? "green" : "red";
         players.scores[host?1:0] += document.getElementById("p2ResultText").innerHTML == "Correct!" ? 1 : 0;
-        if(host) AddPointToPlayer(host?1:0);
+        if(host) AddPointToPlayer(1);
     }  
 }
 
@@ -428,8 +432,8 @@ async function UpdateScoreDisplay() {
     players.scores[0] = data.scores[0];
     players.scores[1] = data.scores[1];
 
-    document.getElementById("p1Score").innerHTML = players.scores[host?0:1] + '/' + round;
-    document.getElementById("p2Score").innerHTML = players.scores[host?1:0] + '/' + round;
+    document.getElementById("p1Score").innerHTML = players.scores[!host?0:1] + '/' + round;
+    document.getElementById("p2Score").innerHTML = players.scores[!host?1:0] + '/' + round;
 }
 async function ClearPlayerAnswers() {
     currentChoice = "";
@@ -472,18 +476,14 @@ async function ClearPlayerReady() {
 }
 
 async function submitAnswer() {
-    if(players.answers[host?0:1] != "") return;
     //get which radio button is checked
-    let answer = currentChoice;
-    if(answer == undefined || answer == "") {
+    if(currentChoice == undefined || currentChoice == "") {
         //turn red
         document.getElementById("submiter").style.backgroundColor = "red";
         return;
     }
 
-    players.answers[host?0:1] = answer;
     document.getElementById("submiter").style.backgroundColor = "#EECEB9";
-    
     //disable radio buttons
     let radios = document.getElementsByName("answer");
     for(let i = 0; i < radios.length; i++){
@@ -496,7 +496,7 @@ async function submitAnswer() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({lobbyCode: lobbyCode, answer: answer, host: host})
+            body: JSON.stringify({lobbyCode: lobbyCode, answer: currentChoice, host: host})
         });
 
         await response.json();
